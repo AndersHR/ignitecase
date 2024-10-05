@@ -15,6 +15,11 @@ def matrix_scatter_plot(request):
 
     max_spend = matrix_data["Spend"].max()
 
-    fig = px.scatter(matrix_data["Share of wallet"], matrix_data["EBIT-margin"], size=matrix_data["Spend"] / max_spend)
+    fig = px.scatter(x=matrix_data["Share of wallet"], y=100*matrix_data["EBIT-margin"], size=.02 + matrix_data["Spend"] / max_spend, log_x=True)
+
+    fig.update_layout(
+        xaxis_title="Share of wallet",
+        yaxis_title="EBIT-margin (%)"
+    )
 
     return render(request, 'matrix/matrix_scatter_plot.html', context={'plot_div': fig.to_html(full_html=False)})
